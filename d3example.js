@@ -1,190 +1,127 @@
-$(document).ready(function() {
+var data = [
+{"id":367, "winner":null, "created_at":"2014-05-07T23:33:21.353Z", "updated_at":"2014-05-07T23:33:21.353Z", "ancestry":null, "ancestry_depth":0, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+{"id":365, "winner":null, "created_at":"2014-05-07T23:33:21.328Z", "updated_at":"2014-05-07T23:33:21.358Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+{"id":361, "winner":null, "created_at":"2014-05-07T23:33:21.293Z", "updated_at":"2014-05-07T23:33:21.355Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":14, "team_2_id":13, "team_1_score":0, "team_2_score":0, "children":[]
+}, 
+{"id":362, "winner":null, "created_at":"2014-05-07T23:33:21.303Z", "updated_at":"2014-05-07T23:33:21.357Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":15, "team_2_id":9, "team_1_score":0, "team_2_score":0, "children":[]
+}]
+}, 
+{"id":366, "winner":null, "created_at":"2014-05-07T23:33:21.345Z", "updated_at":"2014-05-07T23:33:21.363Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+{"id":363, "winner":null, "created_at":"2014-05-07T23:33:21.305Z", "updated_at":"2014-05-07T23:33:21.361Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":16, "team_2_id":12, "team_1_score":0, "team_2_score":0, "children":[]
+}, 
+{"id":364, "winner":null, "created_at":"2014-05-07T23:33:21.306Z", "updated_at":"2014-05-07T23:33:21.362Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":10, "team_2_id":11, "team_1_score":0, "team_2_score":0, "children":[]}]}]}
+];
+  
 
-$('body').append(function(){
-    buildTree("#tree-container");
+// *********** Convert flat data into a nice tree ***************
+// create a name: node map
+var dataMap = data.reduce(function(map, node) {
+  map[node.id] = node;
+  return map;
+}, {});
+
+// create the tree array
+var treeData = [];
+data.forEach(function(node) {
+  // add to parent
+  var ancestry_depth = dataMap[node.ancestry_depth];
+  if (ancestry_depth) {
+    // create child array if it doesn't exist
+    (ancestry_depth.children || (ancestry_depth.children = []))
+      // add node to child array
+      .push(node);
+  } else {
+    // parent is null or missing
+    treeData.push(node);
+  }
 });
 
 
-var treeData = {
-    name: "/",
-    contents: [
-    {
-            name: "Applications",
-            contents: [
-                { name: "Mail.app" },
-                { name: "iPhoto.app" },
-                { name: "Keynote.app" },
-                { name: "iTunes.app" },
-                { name: "XCode.app" },
-                { name: "Numbers.app" },
-                { name: "Pages.app" }
-            ]
-        },
-        {
-            name: "System",
-            contents: []
-        },
-        {
-            name: "Library",
-            contents: [
-                {
-                    name: "Application Support",
-                    contents: [
-                        { name: "Adobe" },
-                        { name: "Apple" },
-                        { name: "Google" },
-                        { name: "Microsoft" }
-                    ]
-                },
-                {
-                    name: "Languages",
-                    contents: [
-                        { name: "Ruby" },
-                        { name: "Python" },
-                        { name: "Javascript" },
-                        { name: "C#" }
-                    ]
-                },
-                {
-                    name: "Developer",
-                    contents: [
-                        { name: "4.2" },
-                        { name: "4.3" },
-                        { name: "5.0" },
-                        { name: "Documentation" }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "opt",
-            contents: []
-        },
-        {
-            name: "Users",
-            contents: [
-                { name: "pavanpodila" },
-                { name: "admin" },
-                { name: "test-user" }
-            ]
-        }
-    ]
-};
+// function tree(nodes)
+// {
+//   var nodeById = {};
 
-function visit(parent, visitFn, childrenFn)
-{
-    if (!parent) return;
+//   nodes.forEach(function(d)
+//   {
+//     nodeById[d.id] = d;
+//   });
 
-    visitFn(parent);
+//   nodes.forEach(function(d)
+//   {
+//     if ("ancestry_depth" in d)
+//     {
+//       var ancestry_depth = nodeById[d.ancestry_depth];
+//       if (ancestry_depth.children) ancestry_depth.children.push(d);
+//       else ancestry_depth.children = [d];
+//     }
+//   });
+// }
 
-    var children = childrenFn(parent);
-    if (children) {
-        var count = children.length;
-        for (var i = 0; i < count; i++) {
-            visit(children[i], visitFn, childrenFn);
-        }
-    }
-}
+// ************** Generate the tree diagram  *****************
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
+  width = 960 - margin.right - margin.left,
+  height = 500 - margin.top - margin.bottom;
+  
+var i = 0;
 
-function buildTree(containerName, customOptions)
-{
-    // build the options object
-    var options = $.extend({
-        nodeRadius: 5, fontSize: 12
-    }, customOptions);
+var tree = d3.layout.tree()
+  .size([height, width]);
 
-    
-    // Calculate total nodes, max label length
-    var totalNodes = 0;
-    var maxLabelLength = 0;
-    visit(treeData, function(d)
-    {
-        totalNodes++;
-        maxLabelLength = Math.max(d.name.length, maxLabelLength);
-    }, function(d)
-    {
-        return d.contents && d.contents.length > 0 ? d.contents : null;
-    });
+var diagonal = d3.svg.diagonal()
+  .projection(function(d) { return [d.y, d.x]; });
 
-    // size of the diagram
-    var size = { width:$(containerName).outerWidth(), height: totalNodes * 15};
+var svg = d3.select("body").append("svg")
+  .attr("width", width + margin.right + margin.left)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var tree = d3.layout.tree()
-        .sort(null)
-        .size([size.height, size.width - maxLabelLength*options.fontSize])
-        .children(function(d)
-        {
-            return (!d.contents || d.contents.length === 0) ? null : d.contents;
-        });
+root = treeData[0];
+  
+update(root);
 
-    var nodes = tree.nodes(treeData);
-    var links = tree.links(nodes);
+function update(source) {
 
-    
-    /*
-        <svg>
-            <g class="container" />
-        </svg>
-     */
-    var layoutRoot = d3.select(containerName)
-        .append("svg:svg").attr("width", size.width).attr("height", size.height)
-        .append("svg:g")
-        .attr("class", "container")
-        .attr("transform", "translate(" + maxLabelLength + ",0)");
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+    links = tree.links(nodes);
 
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
 
-    // Edges between nodes as a <path class="link" />
-    var link = d3.svg.diagonal()
-        .projection(function(d)
-        {
-            return [d.y, d.x];
-        });
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+    .data(nodes, function(d) { return d.id || (d.id = ++i); });
 
-    layoutRoot.selectAll("path.link")
-        .data(links)
-        .enter()
-        .append("svg:path")
-        .attr("class", "link")
-        .attr("d", link);
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { 
+      return "translate(" + d.y + "," + d.x + ")"; });
 
+  nodeEnter.append("circle")
+    .attr("r", 10)
+    .style("fill", "#fff");
 
-    /*
-        Nodes as
-        <g class="node">
-            <circle class="node-dot" />
-            <text />
-        </g>
-     */
-    var nodeGroup = layoutRoot.selectAll("g.node")
-        .data(nodes)
-        .enter()
-        .append("svg:g")
-        .attr("class", "node")
-        .attr("transform", function(d)
-        {
-            return "translate(" + d.y + "," + d.x + ")";
-        });
+  nodeEnter.append("text")
+    .attr("x", function(d) { 
+      return d.children || d._children ? -13 : 13; })
+    .attr("dy", ".35em")
+    .attr("text-anchor", function(d) { 
+      return d.children || d._children ? "end" : "start"; })
+    .text(function(d) 
+      { 
+        return d.team_1_id + " vs. " + d.team_2_id; 
+      })
+    .style("fill-opacity", 1);
 
-    nodeGroup.append("svg:circle")
-        .attr("class", "node-dot")
-        .attr("r", options.nodeRadius);
+  // Declare the links…
+  var link = svg.selectAll("path.link")
+    .data(links, function(d) { return d.target.id; });
 
-    nodeGroup.append("svg:text")
-        .attr("text-anchor", function(d)
-        {
-            return d.children ? "end" : "start";
-        })
-        .attr("dx", function(d)
-        {
-            var gap = 2 * options.nodeRadius;
-            return d.children ? -gap : gap;
-        })
-        .attr("dy", 3)
-        .text(function(d)
-        {
-            return d.name;
-        });
+  // Enter the links.
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("d", diagonal);
 
-}
-
-});
+  }
