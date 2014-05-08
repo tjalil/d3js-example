@@ -1,23 +1,16 @@
-$(document).ready(function() {
-
-// var data = $.parseJSON('{\"id\":367,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.353Z\",\"updated_at\":-/"2014-05-07T23:33:21.353Z\",\"ancestry\":null,\"ancestry_depth\":0,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":365,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.328Z\",\"updated_at\":-/"2014-05-07T23:33:21.358Z\",\"ancestry\":-/"367\",\"ancestry_depth\":1,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":361,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.293Z\",\"updated_at\":-/"2014-05-07T23:33:21.355Z\",\"ancestry\":-/"367/365\",\"ancestry_depth\":2,\"team_1_id\":14,\"team_2_id\":13,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]},{\"id\":362,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.303Z\",\"updated_at\":-/"2014-05-07T23:33:21.357Z\",\"ancestry\":-/"367/365\",\"ancestry_depth\":2,\"team_1_id\":15,\"team_2_id\":9,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]}]},{\"id\":366,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.345Z\",\"updated_at\":-/"2014-05-07T23:33:21.363Z\",\"ancestry\":-/"367\",\"ancestry_depth\":1,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":363,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.305Z\",\"updated_at\":-/"2014-05-07T23:33:21.361Z\",\"ancestry\":-/"367/366\",\"ancestry_depth\":2,\"team_1_id\":16,\"team_2_id\":12,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]},{\"id\":364,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.306Z\",\"updated_at\":-/"2014-05-07T23:33:21.362Z\",\"ancestry\":-/"367/366\",\"ancestry_depth\":2,\"team_1_id\":10,\"team_2_id\":11,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]}]}]}');
-
 var data = [
-{"id":367, "winner":null, "created_at":"2014-05-07T23:33:21.353Z", "updated_at":"2014-05-07T23:33:21.353Z", "ancestry":null, "ancestry_depth":0, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
-{"id":365, "winner":null, "created_at":"2014-05-07T23:33:21.328Z", "updated_at":"2014-05-07T23:33:21.358Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
-{"id":361, "winner":null, "created_at":"2014-05-07T23:33:21.293Z", "updated_at":"2014-05-07T23:33:21.355Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":14, "team_2_id":13, "team_1_score":0, "team_2_score":0, "children":[]
-}, 
-{"id":362, "winner":null, "created_at":"2014-05-07T23:33:21.303Z", "updated_at":"2014-05-07T23:33:21.357Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":15, "team_2_id":9, "team_1_score":0, "team_2_score":0, "children":[]
-}]
-}, 
-{"id":366, "winner":null, "created_at":"2014-05-07T23:33:21.345Z", "updated_at":"2014-05-07T23:33:21.363Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
-{"id":363, "winner":null, "created_at":"2014-05-07T23:33:21.305Z", "updated_at":"2014-05-07T23:33:21.361Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":16, "team_2_id":12, "team_1_score":0, "team_2_score":0, "children":[]
-}, 
-{"id":364, "winner":null, "created_at":"2014-05-07T23:33:21.306Z", "updated_at":"2014-05-07T23:33:21.362Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":10, "team_2_id":11, "team_1_score":0, "team_2_score":0, "children":[]}]}]}
+  {"id":367, "winner":null, "created_at":"2014-05-07T23:33:21.353Z", "updated_at":"2014-05-07T23:33:21.353Z", "ancestry":null, "ancestry_depth":0, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+  {"id":365, "winner":null, "created_at":"2014-05-07T23:33:21.328Z", "updated_at":"2014-05-07T23:33:21.358Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+  {"id":361, "winner":null, "created_at":"2014-05-07T23:33:21.293Z", "updated_at":"2014-05-07T23:33:21.355Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":14, "team_2_id":13, "team_1_score":0, "team_2_score":0, "children":[]
+  }, 
+  {"id":362, "winner":null, "created_at":"2014-05-07T23:33:21.303Z", "updated_at":"2014-05-07T23:33:21.357Z", "ancestry":"367/365", "ancestry_depth":2, "team_1_id":15, "team_2_id":9, "team_1_score":0, "team_2_score":0, "children":[]
+  }]
+  }, 
+  {"id":366, "winner":null, "created_at":"2014-05-07T23:33:21.345Z", "updated_at":"2014-05-07T23:33:21.363Z", "ancestry":"367", "ancestry_depth":1, "team_1_id":null, "team_2_id":null, "team_1_score":0, "team_2_score":0, "children":[
+  {"id":363, "winner":null, "created_at":"2014-05-07T23:33:21.305Z", "updated_at":"2014-05-07T23:33:21.361Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":16, "team_2_id":12, "team_1_score":0, "team_2_score":0, "children":[]
+  }, 
+  {"id":364, "winner":null, "created_at":"2014-05-07T23:33:21.306Z", "updated_at":"2014-05-07T23:33:21.362Z", "ancestry":"367/366", "ancestry_depth":2, "team_1_id":10, "team_2_id":11, "team_1_score":0, "team_2_score":0, "children":[]}]}]}
 ];
-  
-
-// var data = {\"id\":367,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.353Z\",\"updated_at\":-/"2014-05-07T23:33:21.353Z\",\"ancestry\":null,\"ancestry_depth\":0,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":365,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.328Z\",\"updated_at\":-/"2014-05-07T23:33:21.358Z\",\"ancestry\":-/"367\",\"ancestry_depth\":1,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":361,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.293Z\",\"updated_at\":-/"2014-05-07T23:33:21.355Z\",\"ancestry\":-/"367/365\",\"ancestry_depth\":2,\"team_1_id\":14,\"team_2_id\":13,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]},{\"id\":362,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.303Z\",\"updated_at\":-/"2014-05-07T23:33:21.357Z\",\"ancestry\":-/"367/365\",\"ancestry_depth\":2,\"team_1_id\":15,\"team_2_id\":9,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]}]},{\"id\":366,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.345Z\",\"updated_at\":-/"2014-05-07T23:33:21.363Z\",\"ancestry\":-/"367\",\"ancestry_depth\":1,\"team_1_id\":null,\"team_2_id\":null,\"team_1_score\":0,\"team_2_score\":0,\"children\":[{\"id\":363,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.305Z\",\"updated_at\":-/"2014-05-07T23:33:21.361Z\",\"ancestry\":-/"367/366\",\"ancestry_depth\":2,\"team_1_id\":16,\"team_2_id\":12,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]},{\"id\":364,\"winner\":null,\"created_at\":-/"2014-05-07T23:33:21.306Z\",\"updated_at\":-/"2014-05-07T23:33:21.362Z\",\"ancestry\":-/"367/366\",\"ancestry_depth\":2,\"team_1_id\":10,\"team_2_id\":11,\"team_1_score\":0,\"team_2_score\":0,\"children\":[]"}]}]}
 
 // *********** Convert flat data into a nice tree ***************
 // create an id: node map
@@ -127,4 +120,3 @@ function update(source) {
     .attr("d", diagonal);
 
   }
-});
